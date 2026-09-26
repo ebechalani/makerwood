@@ -11,16 +11,17 @@ window.MW_CONFIG = {
 
   // Orders are sent to this WhatsApp number. International format, digits only,
   // no "+" or leading zeros. Example for a Lebanese mobile: '96171123456'.
-  // Leave empty ('') to hide WhatsApp checkout and use email only.
+  // Leave empty ('') to hide WhatsApp checkout.
   whatsappNumber: '',
 
-  // Orders and custom requests can also be sent by email.
+  // Orders and custom requests can also be sent by email. The placeholder below
+  // (ending in .example) is ignored until you put your real address.
   email: 'hello@makerwood.example',
 
   // Shown on the contact section and footer. Leave '' to hide a line.
   phoneDisplay: '',
-  instagram: 'https://www.instagram.com/',
-  instagramHandle: '@makerwood',
+  instagram: 'https://www.instagram.com/makerwoodlb/',
+  instagramHandle: '@makerwoodlb', // customers can also send orders to this account by direct message
   location: 'Lebanon',
   hours: 'Monday to Saturday, 9:00 to 18:00',
 

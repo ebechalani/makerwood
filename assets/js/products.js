@@ -22,7 +22,25 @@ window.MW_CATEGORIES = [
     description:
       'Flat-packed build kits that make science, engineering and art hands-on. Every kit is laser-cut from birch plywood and comes with illustrated step-by-step instructions. Classroom packs are available for schools and clubs.',
     image: 'assets/img/products/robot-arm-kit.webp',
-    note: 'Year-round · class packs available',
+    note: 'Class packs available',
+  },
+  {
+    id: 'games-puzzles',
+    name: 'Games & Puzzles',
+    short: 'Boards, puzzles and family games',
+    description:
+      'Engraved tawleh boards, name puzzles for little ones, tic-tac-toe and tangram sets. Made to be played with, and to be left out on the table when nobody is playing.',
+    image: 'assets/img/products/tawleh-board.webp',
+    note: 'Year-round',
+  },
+  {
+    id: 'decoration',
+    name: 'Decoration',
+    short: 'Signs, wall art and lamps for the home',
+    description:
+      'Welcome signs with your family name, layered wall art, a Lebanese cedar and LED lamps that glow with a name. Pieces for the entrance, the living room and the bedroom.',
+    image: 'assets/img/products/mandala-wall-art.webp',
+    note: 'Year-round',
   },
   {
     id: 'christmas',
@@ -144,7 +162,7 @@ window.MW_PRODUCTS = [
     category: 'steam-kits',
     price: 29,
     badge: 'New',
-    featured: true,
+    featured: false,
     images: mwImages('marble-run-kit'),
     summary: 'A zig-zag marble run to build, test and rebuild. Four ramps, four glass marbles.',
     description: [
@@ -200,6 +218,225 @@ window.MW_PRODUCTS = [
     ],
     personalization: { label: 'Racing number or name', placeholder: 'e.g. 07', maxLength: 8 },
     leadTime: '2 to 3 working days',
+  },
+
+  /* ---------------- GAMES & PUZZLES ---------------- */
+  {
+    id: 'tawleh-board',
+    name: 'Engraved Tawleh Board',
+    category: 'games-puzzles',
+    price: 69,
+    badge: 'New',
+    featured: true,
+    images: mwImages('tawleh-board'),
+    summary: 'A full backgammon set with a family name engraved on the frame.',
+    description: [
+      'CNC-cut frame, laser-engraved points and a hinged case that closes for storage. The name or message goes on the frame, so everyone knows whose board it is.',
+      'Comes with 30 wooden checkers and two dice, ready for the first game.',
+    ],
+    specs: {
+      Material: 'Walnut-stained frame, birch playing fields',
+      'Open size': '50 × 38 cm',
+      'In the box': 'Board, 30 checkers, 2 dice',
+      Finish: 'Hinged, closes into a case',
+    },
+    options: [
+      {
+        name: 'Wood',
+        choices: [
+          { label: 'Walnut-stained', price: 0 },
+          { label: 'Natural oak', price: 10 },
+        ],
+      },
+    ],
+    personalization: { label: 'Name or message on the frame', placeholder: 'e.g. The Khoury Family', maxLength: 26 },
+    leadTime: '5 to 7 working days',
+  },
+  {
+    id: 'name-puzzle',
+    name: 'Name Puzzle Board',
+    category: 'games-puzzles',
+    price: 22,
+    featured: false,
+    images: mwImages('name-puzzle'),
+    summary: "A child's name cut as chunky puzzle letters that lift out and slot back in.",
+    description: [
+      'Each letter is cut from thick wood, painted and fitted into its own place on the board. It helps little ones learn the letters of their name, then hangs on the bedroom wall.',
+    ],
+    specs: {
+      Material: 'Birch board, 9 mm letters, child-safe paint',
+      Size: 'About 12 cm tall, width depends on the name',
+      Age: '2+ (pieces too large to swallow)',
+    },
+    options: [
+      {
+        name: 'Colours',
+        choices: [
+          { label: 'Rainbow', price: 0 },
+          { label: 'Pastel', price: 0 },
+          { label: 'Natural wood', price: 0 },
+        ],
+      },
+    ],
+    personalization: { label: "Child's name (up to 8 letters)", placeholder: 'e.g. Adam', maxLength: 8, required: true },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'tic-tac-toe',
+    name: 'Tic-Tac-Toe Set',
+    category: 'games-puzzles',
+    price: 15,
+    featured: false,
+    images: mwImages('tic-tac-toe'),
+    summary: 'An engraved board with five X and five O pieces in two woods.',
+    description: [
+      'A quick game for cafés, car trips and waiting rooms. Add two names along the bottom for a set that belongs to a pair of rivals.',
+    ],
+    specs: {
+      Material: 'Oak-stained board, birch and walnut pieces',
+      Size: '20 × 22 cm board, 5 cm pieces',
+      'In the box': 'Board and 10 pieces',
+    },
+    options: [],
+    personalization: { label: 'Names along the bottom (optional)', placeholder: 'e.g. Lea vs Adam', maxLength: 20 },
+    leadTime: '2 to 3 working days',
+  },
+  {
+    id: 'tangram-set',
+    name: 'Tangram Puzzle Set',
+    category: 'games-puzzles',
+    price: 14,
+    featured: false,
+    images: mwImages('tangram-set'),
+    summary: 'The classic seven-piece puzzle in a wooden tray, with 30 challenge cards.',
+    description: [
+      'Make a cat, a house or a running man from the same seven shapes. Good for shape and spatial thinking, and for keeping adults busy too.',
+    ],
+    specs: {
+      Material: 'Mixed wood tones, walnut-stained tray',
+      Size: '20 × 20 cm tray',
+      'In the box': '7 pieces, tray, 30 challenge cards',
+      Age: '5+',
+    },
+    options: [],
+    personalization: { label: 'Name on the tray (optional)', placeholder: 'e.g. Maya', maxLength: 12 },
+    leadTime: '2 to 3 working days',
+  },
+
+  /* ---------------- DECORATION ---------------- */
+  {
+    id: 'welcome-sign',
+    name: 'Family Welcome Sign',
+    category: 'decoration',
+    price: 32,
+    featured: false,
+    images: mwImages('welcome-sign'),
+    summary: 'A round door sign with your family name, the year and an olive branch.',
+    description: [
+      'Hang it on the front door or in the entrance. Engraved on birch and finished with a jute rope, ready to hang.',
+    ],
+    specs: {
+      Material: '6 mm birch plywood, jute rope',
+      Size: '35 cm diameter (45 cm option)',
+      Finish: 'Clear protective coat for indoor or covered doors',
+    },
+    options: [
+      {
+        name: 'Size',
+        choices: [
+          { label: '35 cm', price: 0 },
+          { label: '45 cm', price: 10 },
+        ],
+      },
+    ],
+    personalization: { label: 'Family name and year', placeholder: 'e.g. The Khoury Family, 2019', maxLength: 30, required: true },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'mandala-wall-art',
+    name: 'Layered Mandala Wall Art',
+    category: 'decoration',
+    price: 45,
+    featured: false,
+    images: mwImages('mandala-wall-art'),
+    summary: 'Three cut layers in walnut, oak and birch tones that cast soft shadows on the wall.',
+    description: [
+      'Each layer is cut separately and stacked with small spacers, so the pattern gains depth as the light moves through the day.',
+    ],
+    specs: {
+      Material: 'Walnut, oak and birch-toned plywood',
+      Size: '40 cm diameter (60 cm option)',
+      Finish: 'Keyhole hanger on the back',
+    },
+    options: [
+      {
+        name: 'Size',
+        choices: [
+          { label: '40 cm', price: 0 },
+          { label: '60 cm', price: 25 },
+        ],
+      },
+    ],
+    personalization: null,
+    leadTime: '4 to 6 working days',
+  },
+  {
+    id: 'cedar-wall-art',
+    name: 'Lebanese Cedar Wall Art',
+    category: 'decoration',
+    price: 38,
+    featured: true,
+    images: mwImages('cedar-wall-art'),
+    summary: 'A layered cedar raised on a birch board, with a line of your choice underneath.',
+    description: [
+      'The cedar is cut in walnut tone and layered onto the board so it stands out in relief. A gift for a new home, or for family abroad.',
+    ],
+    specs: {
+      Material: 'Birch board, walnut-stained cedar',
+      Size: '30 × 35 cm',
+      Finish: 'Jute hanging cord',
+    },
+    options: [
+      {
+        name: 'Cedar',
+        choices: [
+          { label: 'Walnut tone', price: 0 },
+          { label: 'Painted green', price: 5 },
+        ],
+      },
+    ],
+    personalization: { label: 'Line under the cedar', placeholder: 'e.g. Lebanon, or your family name', maxLength: 24 },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'led-name-lamp',
+    name: 'Personalized LED Name Lamp',
+    category: 'decoration',
+    price: 30,
+    badge: 'New',
+    featured: true,
+    images: mwImages('led-name-lamp'),
+    summary: 'An engraved acrylic panel that glows with a name, the moon and stars.',
+    description: [
+      'The design is engraved into clear acrylic and lit from the wooden base, so it glows softly in the dark. A night light for a child\'s room, or a gift for anyone.',
+      'Powered by USB; a wall plug is not included.',
+    ],
+    specs: {
+      Material: 'Clear acrylic panel, walnut-stained base',
+      Size: '18 × 24 cm',
+      Power: 'USB cable included',
+    },
+    options: [
+      {
+        name: 'Light',
+        choices: [
+          { label: 'Warm white', price: 0 },
+          { label: 'Multicolour with remote', price: 6 },
+        ],
+      },
+    ],
+    personalization: { label: 'Name to engrave', placeholder: 'e.g. Maya', maxLength: 12, required: true },
+    leadTime: '3 to 5 working days',
   },
 
   /* ---------------- CHRISTMAS ---------------- */
@@ -432,7 +669,7 @@ window.MW_PRODUCTS = [
     name: 'Engraved Mom Heart',
     category: 'mothers-day',
     price: 20,
-    featured: true,
+    featured: false,
     images: mwImages('mom-heart-plaque'),
     summary: 'A hanging heart engraved with the name she answers to at home.',
     description: [
@@ -688,7 +925,7 @@ window.MW_PRODUCTS = [
     name: 'Our Song Plaque',
     category: 'valentine',
     price: 30,
-    featured: true,
+    featured: false,
     images: mwImages('song-plaque'),
     summary: 'Your song as a record, a title and a play bar, engraved on a standing plaque.',
     description: [

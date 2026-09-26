@@ -170,21 +170,59 @@
 
   /* ---------------- Contact helpers ---------------- */
   const hasWhatsApp = () => /^\d{8,15}$/.test(String(C.whatsappNumber || ''));
-  const hasEmail = () => /@/.test(String(C.email || ''));
+  // placeholder addresses (…@….example) are treated as not set, so no order goes nowhere
+  const hasEmail = () => /@/.test(String(C.email || '')) && !/\.example$/i.test(String(C.email));
   const whatsappLink = (text) => `https://wa.me/${C.whatsappNumber}${text ? '?text=' + encodeURIComponent(text) : ''}`;
   const mailLink = (subject, body) =>
     `mailto:${C.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   function configWarning() {
     const issues = [];
     if (!hasWhatsApp()) issues.push('your WhatsApp number');
-    if (!hasEmail() || /\.example$/i.test(C.email)) issues.push('your email address');
+    if (!hasEmail()) issues.push('your email address');
     if (!issues.length) return '';
-    return `<p class="config-warning"><b>Store owner:</b> add ${issues.join(' and ')} in <code>assets/js/config.js</code> so orders reach you.</p>`;
+    const now = hasInstagram() ? ` Until then, orders arrive by Instagram message to @${esc(igHandle())}.` : '';
+    return `<p class="config-warning"><b>Store owner:</b> add ${issues.join(' and ')} in <code>assets/js/config.js</code> so customers can send orders there too.${now}</p>`;
   }
   function openExternal(href) {
     if (href.startsWith('mailto:')) { location.href = href; return true; }
     const w = window.open(href, '_blank', 'noopener');
     return !!w;
+  }
+
+  // Instagram: profile link plus a direct-message link (ig.me opens a chat with the shop)
+  const igHandle = () => String(C.instagramHandle || '').replace(/^@/, '').trim();
+  const hasInstagram = () => /^[A-Za-z0-9._]{2,30}$/.test(igHandle());
+  const instagramProfile = () => C.instagram || `https://www.instagram.com/${igHandle()}/`;
+  const instagramDM = () => `https://ig.me/m/${igHandle()}`;
+
+  // Ways a customer can send an order or request, in order of preference.
+  // WhatsApp and email open with the message already written; Instagram can't be
+  // pre-filled, so the text is copied for the customer to paste into the chat.
+  const CHANNELS = [
+    { id: 'whatsapp', name: 'WhatsApp', icon: 'chat', cls: 'btn-whatsapp', ok: hasWhatsApp, link: (text) => whatsappLink(text), prefilled: true },
+    { id: 'instagram', name: 'Instagram', icon: 'insta', cls: 'btn-instagram', ok: hasInstagram, link: () => instagramDM(), prefilled: false },
+    { id: 'email', name: 'email', icon: 'mail', cls: '', ok: hasEmail, link: (text, subject) => mailLink(subject, text), prefilled: true },
+  ];
+  const channels = () => CHANNELS.filter((c) => c.ok());
+  const external = (c) => (c.id === 'email' ? '' : 'target="_blank" rel="noopener"');
+  function sendButtons(what, block) {
+    return channels().map((c, i) => `
+      <button type="submit" class="btn ${i === 0 ? c.cls : 'btn-ghost'}${block ? ' btn-block' : ''}" data-via="${c.id}">${icon(c.icon)}
+        ${c.id === 'email' ? `Send ${what} by email` : c.prefilled ? `Send ${what} on ${c.name}` : `Copy ${what} &amp; message us on ${c.name}`}</button>`).join('');
+  }
+  function copyText(text) {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(() => true, () => false);
+    } catch (e) { /* clipboard unavailable */ }
+    return Promise.resolve(false);
+  }
+  // Copy first (needs the click's user activation), then open the chat or email app.
+  function send(channelId, text, subject) {
+    const c = CHANNELS.find((x) => x.id === channelId && x.ok()) || channels()[0];
+    const href = c.link(text, subject);
+    const copied = c.prefilled ? Promise.resolve(false) : copyText(text);
+    openExternal(href);
+    return { channel: c, href, copied };
   }
 
   /* ---------------- Shared layout ---------------- */
@@ -227,6 +265,7 @@
           <a href="about.html#contact">Contact</a>
         </nav>
         <div class="header-actions">
+          ${hasInstagram() ? `<a class="icon-btn ig-link" href="${esc(instagramProfile())}" target="_blank" rel="noopener" aria-label="MakerWood on Instagram">${icon('insta')}</a>` : ''}
           <button type="button" class="icon-btn" data-open-search aria-label="Search products">${icon('search')}</button>
           <a class="icon-btn" href="cart.html" data-open-cart aria-label="Cart">${icon('bag')}<span class="cart-count" hidden>0</span></a>
           <button type="button" class="icon-btn menu-btn" data-open-menu aria-label="Open menu">${icon('menu')}</button>
@@ -264,7 +303,7 @@
             <ul>
               ${hasWhatsApp() ? `<li><a href="${whatsappLink('')}" target="_blank" rel="noopener">WhatsApp${C.phoneDisplay ? ' · ' + esc(C.phoneDisplay) : ''}</a></li>` : ''}
               ${hasEmail() ? `<li><a href="mailto:${esc(C.email)}">${esc(C.email)}</a></li>` : ''}
-              ${C.instagram ? `<li><a href="${esc(C.instagram)}" target="_blank" rel="noopener">Instagram ${esc(C.instagramHandle || '')}</a></li>` : ''}
+              ${hasInstagram() ? `<li><a href="${esc(instagramProfile())}" target="_blank" rel="noopener">Instagram @${esc(igHandle())}</a></li>` : ''}
               ${C.hours ? `<li>${esc(C.hours)}</li>` : ''}
             </ul>
           </div>
@@ -292,6 +331,7 @@
             <a href="about.html">About us</a>
             <a href="about.html#faq">Delivery &amp; FAQ</a>
             <a href="about.html#contact">Contact</a>
+            ${hasInstagram() ? `<a href="${esc(instagramProfile())}" target="_blank" rel="noopener">Instagram @${esc(igHandle())}</a>` : ''}
           </nav>
         </div>
       </aside>
@@ -488,6 +528,41 @@
           </span>
         </a>`).join('');
     }
+    const ig = $('#home-instagram');
+    if (ig && hasInstagram()) {
+      const picks = ['led-name-lamp', 'tawleh-board', 'name-bauble', 'cedar-wall-art', 'family-tree-plaque', 'robot-arm-kit'].map((id) => byId[id]).filter(Boolean);
+      ig.innerHTML = `
+        <div class="ig-band">
+          <div class="ig-copy">
+            <span class="eyebrow">Instagram</span>
+            <h2 id="ig-title">Follow the workshop <a href="${esc(instagramProfile())}" target="_blank" rel="noopener">@${esc(igHandle())}</a></h2>
+            <p class="lead">New pieces, custom orders fresh off the laser and seasonal collections appear there first. You can also message us there to order or ask a question.</p>
+            <div class="split-actions">
+              <a class="btn btn-instagram" href="${esc(instagramProfile())}" target="_blank" rel="noopener">${icon('insta')} Follow @${esc(igHandle())}</a>
+              <a class="btn btn-ghost" href="${esc(instagramDM())}" target="_blank" rel="noopener">${icon('chat')} Send us a message</a>
+            </div>
+          </div>
+          <div class="ig-grid">${picks.map((p) => `<a href="${link('product.html', { id: p.id })}" aria-label="${esc(p.name)}"><img src="${esc(p.images[0])}" alt="" loading="lazy" width="800" height="800"></a>`).join('')}</div>
+        </div>`;
+    } else if (ig) {
+      ig.closest('section').hidden = true;
+    }
+    const org = document.createElement('script');
+    org.type = 'application/ld+json';
+    org.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Store',
+      name: C.storeName,
+      slogan: C.tagline,
+      url: location.href.split('#')[0].split('?')[0],
+      logo: new URL('assets/img/apple-touch-icon.png', location.href).href,
+      image: new URL('assets/img/og-image.jpg', location.href).href,
+      email: hasEmail() ? C.email : undefined,
+      sameAs: hasInstagram() ? [instagramProfile()] : undefined,
+      address: C.location ? { '@type': 'PostalAddress', addressCountry: C.location } : undefined,
+    });
+    document.head.appendChild(org);
+
     const feat = $('#home-featured');
     if (feat) feat.innerHTML = PRODUCTS.filter((p) => p.featured).slice(0, 8).map(productCard).join('');
 
@@ -671,6 +746,7 @@
                 <button type="submit" class="btn">${icon('bag')} Add to cart</button>
               </div>
               ${hasWhatsApp() ? `<a class="btn btn-whatsapp btn-block" id="wa-direct" href="#" target="_blank" rel="noopener">${icon('chat')} Order this on WhatsApp</a>` : ''}
+              ${hasInstagram() ? `<p class="ask-line">${icon('insta')} Questions about this piece? <a href="${esc(instagramDM())}" target="_blank" rel="noopener">Message us on Instagram</a></p>` : ''}
             </form>
             <ul class="assurances">
               <li>${icon('clock')}<span><b>Made to order.</b> Ready in ${esc(p.leadTime || 'a few working days')}.</span></li>
@@ -857,10 +933,7 @@
               </fieldset>
               <div class="field"><label for="c-notes">Notes, gift message or needed-by date</label><textarea id="c-notes" name="notes" rows="3">${esc(draft.notes || '')}</textarea></div>
               ${configWarning()}
-              <div class="send-row">
-                ${hasWhatsApp() ? `<button type="submit" class="btn btn-whatsapp btn-block" data-via="whatsapp">${icon('chat')} Send order on WhatsApp</button>` : ''}
-                ${hasEmail() ? `<button type="submit" class="btn ${hasWhatsApp() ? 'btn-ghost' : ''} btn-block" data-via="email">${icon('mail')} Send order by email</button>` : ''}
-              </div>
+              <div class="send-row">${sendButtons('order', true)}</div>
               <p class="form-note">Nothing is charged online. We reply to confirm your order, the engraving and the delivery date, then you pay by ${esc((C.paymentMethods || []).join(' or ').toLowerCase())}.</p>
             </form>
           </aside>
@@ -893,7 +966,7 @@
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         if (!form.checkValidity()) { form.reportValidity(); return; }
-        const via = (e.submitter && e.submitter.dataset.via) || (hasWhatsApp() ? 'whatsapp' : 'email');
+        const via = (e.submitter && e.submitter.dataset.via) || '';
         const data = Object.fromEntries(new FormData(form).entries());
         placeOrder(data, via);
       });
@@ -936,36 +1009,42 @@
       msg.push(`Payment: ${data.payment || ''}`);
       if (data.notes) msg.push(`Notes: ${data.notes}`);
       const text = msg.join('\n');
-      const href = via === 'whatsapp' ? whatsappLink(text) : mailLink(`Order ${number} · ${C.storeName}`, text);
+      const subject = `Order ${number} · ${C.storeName}`;
 
       storage.set(LAST_ORDER_KEY, { number, items: cart.items, text });
-      openExternal(href);
+      const sent = send(via, text, subject);
+      const c = sent.channel;
       confirmed = true;
       cart.clear();
 
-      const other = via === 'whatsapp' ? (hasEmail() ? mailLink(`Order ${number} · ${C.storeName}`, text) : '') : (hasWhatsApp() ? whatsappLink(text) : '');
+      const where = c.id === 'email' ? 'your email app' : c.name;
+      const others = channels().filter((x) => x.id !== c.id);
       root.innerHTML = `
         <div class="wrap confirm">
           <div class="seal">${icon('check')}</div>
           <h1 style="font-size:clamp(2rem,1.5rem + 2vw,2.8rem)">One last step</h1>
           <span class="order-no">${esc(number)}</span>
-          <p>Your order is written out in ${via === 'whatsapp' ? 'WhatsApp' : 'your email app'}. <b>Press send</b> there and we'll reply to confirm the details, the engraving and your delivery date.</p>
-          <p class="muted">If ${via === 'whatsapp' ? 'WhatsApp' : 'your email app'} didn't open, use the button below, or copy the order and send it to us${hasEmail() ? ` at <b>${esc(C.email)}</b>` : ''}.</p>
+          ${c.prefilled
+            ? `<p>Your order is written out in ${where}. <b>Press send</b> there and we'll reply to confirm the details, the engraving and your delivery date.</p>
+               <p class="muted">If ${where} didn't open, use the button below, or copy the order and send it to us another way.</p>`
+            : `<p>We copied your order. In the Instagram chat with <b>@${esc(igHandle())}</b>, <b>paste it and press send</b>. We'll reply to confirm the details, the engraving and your delivery date.</p>
+               <p class="muted">If the chat didn't open, use the button below. If there's nothing to paste, press Copy order first.</p>`}
           <div class="actions">
-            <a class="btn ${via === 'whatsapp' ? 'btn-whatsapp' : ''}" href="${esc(href)}" ${via === 'whatsapp' ? 'target="_blank" rel="noopener"' : ''}>${icon(via === 'whatsapp' ? 'chat' : 'mail')} Open ${via === 'whatsapp' ? 'WhatsApp' : 'email'} again</a>
-            ${other ? `<a class="btn btn-ghost" href="${esc(other)}" ${via === 'email' ? 'target="_blank" rel="noopener"' : ''}>Send by ${via === 'whatsapp' ? 'email' : 'WhatsApp'} instead</a>` : ''}
+            <a class="btn ${c.cls}" href="${esc(sent.href)}" ${external(c)} ${c.prefilled ? '' : 'data-copy'}>${icon(c.icon)} Open ${c.id === 'email' ? 'email' : c.name + (c.prefilled ? '' : ' chat')} again</a>
             <button type="button" class="btn btn-ghost" id="copy-order">${icon('copy')} Copy order</button>
+            ${others.map((o) => `<a class="btn btn-ghost" href="${esc(o.link(text, subject))}" ${external(o)} ${o.prefilled ? '' : 'data-copy'}>${icon(o.icon)} Send ${o.id === 'email' ? 'by email' : 'on ' + o.name} instead</a>`).join('')}
           </div>
           <details class="accordion" style="text-align:left;margin-top:32px"><summary>Order details ${icon('plus')}</summary><div class="acc-body"><pre style="white-space:pre-wrap;font-family:var(--font-mono);font-size:.85rem;margin:0" id="order-text">${esc(text)}</pre></div></details>
           <p style="margin-top:28px"><button type="button" class="link-btn" id="undo-order">I didn't send it, put the items back in my cart</button></p>
         </div>`;
+      $$('[data-copy]', root).forEach((a) => a.addEventListener('click', () => { copyText(text); }));
       window.scrollTo(0, 0);
       $('#copy-order').addEventListener('click', (e) => {
         const btn = e.currentTarget;
-        const done = () => { btn.innerHTML = `${icon('check')} Copied`; };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(done, () => selectText($('#order-text')));
-        } else selectText($('#order-text'));
+        copyText(text).then((ok) => {
+          if (ok) btn.innerHTML = `${icon('check')} Copied`;
+          else selectText($('#order-text'));
+        });
       });
       $('#undo-order').addEventListener('click', () => {
         const last = storage.get(LAST_ORDER_KEY, null);
@@ -990,14 +1069,11 @@
     const form = $('#custom-form');
     if (!form) return;
     const actions = $('#custom-actions');
-    actions.innerHTML = `
-      ${configWarning()}
-      ${hasWhatsApp() ? `<button type="submit" class="btn btn-whatsapp" data-via="whatsapp">${icon('chat')} Send request on WhatsApp</button>` : ''}
-      ${hasEmail() ? `<button type="submit" class="btn ${hasWhatsApp() ? 'btn-ghost' : ''}" data-via="email">${icon('mail')} Send request by email</button>` : ''}`;
+    actions.innerHTML = `${configWarning()}${sendButtons('request', false)}`;
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      const via = (e.submitter && e.submitter.dataset.via) || (hasWhatsApp() ? 'whatsapp' : 'email');
+      const via = (e.submitter && e.submitter.dataset.via) || '';
       const d = Object.fromEntries(new FormData(form).entries());
       const rows = [
         `Custom order request · ${C.storeName}`, '',
@@ -1007,11 +1083,16 @@
         '', 'Idea:', d.idea, '', 'I can send a sketch, logo or photo in the next message.',
       ].filter((r) => r !== null);
       const text = rows.join('\n');
-      const href = via === 'whatsapp' ? whatsappLink(text) : mailLink(`Custom order request · ${d.name}`, text);
-      openExternal(href);
+      const sent = send(via, text, `Custom order request · ${d.name}`);
+      const c = sent.channel;
       const done = $('#custom-done');
       done.hidden = false;
-      done.innerHTML = `<div class="panel" style="display:grid;gap:10px"><h2 style="font-size:1.3rem">Your request is ready to send</h2><p class="muted">Press send in ${via === 'whatsapp' ? 'WhatsApp' : 'your email app'}. If it didn't open, <a href="${esc(href)}" ${via === 'whatsapp' ? 'target="_blank" rel="noopener"' : ''}>open it here</a>. We usually reply within one working day with questions or a quote.</p></div>`;
+      done.innerHTML = `<div class="panel" style="display:grid;gap:10px"><h2 style="font-size:1.3rem">Your request is ready to send</h2>
+        <p class="muted">${c.prefilled
+          ? `Press send in ${c.id === 'email' ? 'your email app' : c.name}.`
+          : `We copied your request. Paste it in the Instagram chat with <b>@${esc(igHandle())}</b> and press send.`}
+        If it didn't open, <a href="${esc(sent.href)}" ${external(c)} ${c.prefilled ? '' : 'data-copy'}>open it here</a>. We usually reply within one working day with questions or a quote.</p></div>`;
+      $$('[data-copy]', done).forEach((a) => a.addEventListener('click', () => { copyText(text); }));
       done.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
@@ -1022,7 +1103,7 @@
       const list = [];
       if (hasWhatsApp()) list.push(`<a class="contact-card" href="${whatsappLink('')}" target="_blank" rel="noopener">${icon('chat')}<strong>WhatsApp</strong><span>${esc(C.phoneDisplay || 'Message us for orders and questions')}</span></a>`);
       if (hasEmail()) list.push(`<a class="contact-card" href="mailto:${esc(C.email)}">${icon('mail')}<strong>Email</strong><span>${esc(C.email)}</span></a>`);
-      if (C.instagram) list.push(`<a class="contact-card" href="${esc(C.instagram)}" target="_blank" rel="noopener">${icon('insta')}<strong>Instagram</strong><span>${esc(C.instagramHandle || 'Follow our latest pieces')}</span></a>`);
+      if (hasInstagram()) list.push(`<a class="contact-card" href="${esc(instagramProfile())}" target="_blank" rel="noopener">${icon('insta')}<strong>Instagram</strong><span>@${esc(igHandle())} · follow our latest pieces or send us a message</span></a>`);
       list.push(`<div class="contact-card">${icon('pin')}<strong>Workshop</strong><span>${esc(C.location || '')}${C.hours ? '<br>' + esc(C.hours) : ''}</span></div>`);
       cards.innerHTML = list.join('');
     }
@@ -1037,14 +1118,15 @@
   if (pages[PAGE]) pages[PAGE]();
 
   // A floating WhatsApp shortcut once a number is configured
-  if (hasWhatsApp() && PAGE !== 'cart') {
+  if ((hasWhatsApp() || hasInstagram()) && PAGE !== 'cart') {
+    const wa = hasWhatsApp();
     const fab = document.createElement('a');
-    fab.className = 'wa-float';
-    fab.href = whatsappLink(`Hi ${C.storeName}!`);
+    fab.className = wa ? 'wa-float' : 'wa-float ig';
+    fab.href = wa ? whatsappLink(`Hi ${C.storeName}!`) : instagramDM();
     fab.target = '_blank';
     fab.rel = 'noopener';
-    fab.setAttribute('aria-label', 'Chat with us on WhatsApp');
-    fab.innerHTML = icon('chat');
+    fab.setAttribute('aria-label', wa ? 'Chat with us on WhatsApp' : 'Message us on Instagram');
+    fab.innerHTML = icon(wa ? 'chat' : 'insta');
     document.body.appendChild(fab);
   }
 
