@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Custom orders · MakerWood</title>
+  <meta name="description" content="Tell MakerWood what to make: signs, logos, wedding décor, corporate gifts and school projects, laser-cut or CNC-carved to order.">
+  <meta name="theme-color" content="#2a1a0f">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Custom orders · MakerWood">
+  <meta property="og:description" content="Tell MakerWood what to make: signs, logos, wedding décor, corporate gifts and school projects, laser-cut or CNC-carved to order.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=IBM+Plex+Mono:wght@500&family=Montserrat:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="announce"></div>
+  <header class="site-header" id="site-header"></header>
+
+  <main id="main" data-page="custom">
+    <section class="page-head">
+      <div class="wrap">
+        <ol class="crumbs"><li><a href="index.html">Home</a></li><li aria-current="page">Custom orders</li></ol>
+        <span class="eyebrow" style="margin-top:14px">Custom orders</span>
+        <h1>Tell us what to make</h1>
+        <p class="lead">Describe your idea and we'll reply with questions, a design proposal and a price. There's nothing to pay until you approve the design.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:clamp(32px,5vw,56px)">
+      <div class="wrap custom-layout">
+        <div>
+          <span class="eyebrow">What we make to order</span>
+          <h2 style="margin-top:12px;font-size:clamp(1.5rem,1.2rem + 1vw,2rem)">From one name sign to a few hundred favours</h2>
+          <ul class="make-list"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg><div><strong>Personalized gifts</strong><span>Names, dates, messages and handwriting engraved on boards, boxes, frames and keychains.</span></div></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="11" rx="1.5"/><path d="M8 15v5M16 15v5M7 9.5h10"/></svg><div><strong>Signs and logos</strong><span>Shop signs, house numbers, office logos and menu boards, engraved or carved.</span></div></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="5"/><circle cx="15" cy="14" r="5"/><path d="m10 5 2-2 2 2-2 2z"/></svg><div><strong>Weddings and events</strong><span>Cake toppers, table numbers, welcome signs, favours and guest-book frames.</span></div></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5.5 12v8.5h13V12M12 8v12.5"/><path d="M12 8S10.2 3.5 7.8 4.5 8.5 8 12 8Zm0 0s1.8-4.5 4.2-3.5S15.5 8 12 8Z"/></svg><div><strong>Corporate gifts</strong><span>Branded coasters, keychains, desk pieces and awards in small or large runs.</span></div></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg><div><strong>Schools and clubs</strong><span>Class sets of STEAM kits, medals, name tags and projects designed with teachers.</span></div></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5h6v5H9z"/><path d="M10 7.5h4v5.5l-2 3.5-2-3.5z"/><path d="M12 17v4.5M7 21.5h10"/></svg><div><strong>CNC carving</strong><span>Deep-carved signs, solid-wood boards and parts cut to your drawing.</span></div></li></ul>
+        </div>
+        <div>
+          <form class="panel custom-form" id="custom-form">
+            <h2 style="font-size:1.4rem">Your request</h2>
+            <div class="form-grid">
+              <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" name="name" required autocomplete="name"></div>
+              <div class="field"><label for="f-phone">Phone / WhatsApp <span class="req">*</span></label><input id="f-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel"></div>
+              <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+              <div class="field"><label for="f-type">What would you like? <span class="req">*</span></label>
+                <select id="f-type" name="type" required>
+                  <option>Personalized gift</option>
+                  <option>Sign or logo</option>
+                  <option>Wedding or event décor</option>
+                  <option>Corporate gifts</option>
+                  <option>School or club order</option>
+                  <option>CNC carving or parts</option>
+                  <option>Something else</option>
+                </select></div>
+              <div class="field"><label for="f-qty">Quantity</label><input id="f-qty" name="quantity" type="number" min="1" inputmode="numeric" placeholder="e.g. 1 or 120"></div>
+              <div class="field"><label for="f-size">Approximate size</label><input id="f-size" name="size" placeholder="e.g. 30 × 20 cm"></div>
+              <div class="field"><label for="f-material">Material</label>
+                <select id="f-material" name="material">
+                  <option value="">No preference</option>
+                  <option>Birch plywood</option>
+                  <option>Solid wood</option>
+                  <option>MDF (to paint)</option>
+                  <option>Acrylic</option>
+                </select></div>
+              <div class="field"><label for="f-budget">Budget</label>
+                <select id="f-budget" name="budget">
+                  <option value="">Not sure yet</option>
+                  <option>Under $25</option>
+                  <option>$25 to $50</option>
+                  <option>$50 to $100</option>
+                  <option>$100 to $250</option>
+                  <option>Over $250</option>
+                </select></div>
+              <div class="field"><label for="f-date">Needed by</label><input id="f-date" name="date" type="date"></div>
+              <div class="field full"><label for="f-idea">Describe your idea <span class="req">*</span></label>
+                <textarea id="f-idea" name="idea" required rows="5" placeholder="What is it for, what should it say, where will it go?"></textarea>
+                <div class="hint"><span>Have a sketch, logo or photo? Send it in the chat or email right after this message.</span></div></div>
+            </div>
+            <div class="actions" id="custom-actions"></div>
+          </form>
+          <div id="custom-done" hidden style="margin-top:18px"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
