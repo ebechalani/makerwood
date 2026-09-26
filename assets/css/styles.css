@@ -138,6 +138,7 @@ p { margin: 0; }
 .on-dark .btn-ghost { --btn-fg: var(--on-dark); border-color: rgba(246, 236, 223, 0.35); }
 .on-dark .btn-ghost:hover { border-color: var(--on-dark); }
 .btn-whatsapp { --btn-bg: #1f7a4d; --btn-fg: #fff; }
+.btn-instagram { --btn-bg: linear-gradient(45deg, #e2872f 0%, #c9304f 45%, #9c2f8e 100%); --btn-fg: #fff; }
 .btn-block { width: 100%; }
 .btn[disabled] { opacity: 0.5; pointer-events: none; }
 
@@ -212,6 +213,7 @@ p { margin: 0; }
 .cart-count.bump { animation: bump 0.4s ease; }
 @keyframes bump { 40% { transform: scale(1.35); } }
 .menu-btn { display: none; }
+@media (max-width: 560px) { .ig-link { display: none; } }
 
 @media (max-width: 960px) {
   .main-nav { display: none; }
@@ -367,18 +369,18 @@ p { margin: 0; }
 .section-head p { margin-top: 12px; color: var(--muted); max-width: 52ch; }
 
 /* ---------- Category tiles ---------- */
-.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 2vw, 22px); }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 2vw, 20px); }
 .cat-tile {
   position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; text-decoration: none;
-  aspect-ratio: 4 / 3.4; max-width: 100%; isolation: isolate; background: var(--sand);
+  aspect-ratio: 4 / 4.6; max-width: 100%; isolation: isolate; background: var(--sand);
 }
 .cat-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .cat-tile::after {
   content: ""; position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg, transparent 45%, rgba(29, 17, 10, 0.78) 100%);
 }
-.cat-tile .cat-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 20px 22px; color: #fff; display: flex; align-items: end; justify-content: space-between; gap: 12px; }
-.cat-tile h3 { font-size: clamp(1.25rem, 1rem + 1vw, 1.65rem); }
+.cat-tile .cat-info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 18px; color: #fff; display: flex; align-items: end; justify-content: space-between; gap: 12px; }
+.cat-tile h3 { font-size: clamp(1.2rem, 1rem + 0.6vw, 1.45rem); }
 .cat-tile p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); margin-top: 4px; line-height: 1.4; }
 .cat-tile .cat-note {
   position: absolute; top: 14px; left: 14px; z-index: 2;
@@ -392,7 +394,7 @@ p { margin: 0; }
 .cat-tile .arrow svg { width: 18px; height: 18px; }
 .cat-tile:hover img { transform: scale(1.05); }
 .cat-tile:hover .arrow { transform: rotate(-45deg); }
-@media (max-width: 860px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1000px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } .cat-tile { aspect-ratio: 4 / 3.4; } }
 @media (max-width: 520px) {
   .cat-grid { grid-template-columns: 1fr; }
   .cat-tile { aspect-ratio: 16 / 10; }
@@ -741,6 +743,22 @@ a.contact-card:hover { background: var(--walnut-600); }
 .footer-motto { font-family: var(--font-mono); letter-spacing: 0.24em; text-transform: uppercase; font-size: 0.72rem; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
 
+/* ---------- Instagram band ---------- */
+.ig-band { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.ig-band h2 { margin-top: 14px; }
+.ig-band h2 a { color: var(--oak-deep); text-decoration: none; white-space: nowrap; }
+.ig-band h2 a:hover { text-decoration: underline; }
+.ig-band .lead { margin-top: 16px; }
+.ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ig-grid a { display: block; aspect-ratio: 1; max-width: 100%; border-radius: 10px; overflow: hidden; }
+.ig-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.ig-grid a:hover img { transform: scale(1.05); }
+@media (max-width: 860px) { .ig-band { grid-template-columns: 1fr; } }
+
+.ask-line { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--muted); margin: 0; }
+.ask-line svg { width: 18px; height: 18px; flex: none; }
+.ask-line a { color: var(--ink); font-weight: 600; }
+
 /* ---------- Custom order page ---------- */
 .custom-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
 .make-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 4px; }
@@ -761,6 +779,7 @@ a.contact-card:hover { background: var(--walnut-600); }
   transition: transform 0.2s;
 }
 .wa-float svg { width: 28px; height: 28px; }
+.wa-float.ig { background: linear-gradient(45deg, #e2872f 0%, #c9304f 45%, #9c2f8e 100%); box-shadow: 0 10px 24px -8px rgba(156, 47, 142, 0.6); }
 .wa-float:hover { transform: scale(1.07); }
 
 /* ---------- Toast ---------- */

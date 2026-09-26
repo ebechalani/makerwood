@@ -15,11 +15,16 @@ It is a fast static website (plain HTML, CSS and JavaScript, no build step), so 
 | Custom orders | `custom.html` | Request form for signs, logos, events, corporate and school orders |
 | About | `about.html` | Story, machines and materials, FAQ (`#faq`) and contact (`#contact`) |
 
-Categories at launch: **STEAM Kits, Christmas, Easter, Mother's Day, Music, Valentine's**, with 4 products each.
+Categories: **STEAM Kits, Games & Puzzles, Decoration, Christmas, Easter, Mother's Day, Music, Valentine's**, with 4 products each (32 in total).
 
 ### How orders work
 
-There is no online payment. At checkout the customer fills in their details and presses **Send order on WhatsApp** (or email). Their WhatsApp opens with the full order already written, including the order number, items, engraving text, total, address and payment method. They press send, you reply to confirm, and they pay by cash on delivery or transfer.
+There is no online payment. At checkout the customer fills in their details and chooses how to send the order:
+
+- **WhatsApp** or **email**: the app opens with the full order already written, including the order number, items, engraving text, total, address and payment method.
+- **Instagram**: Instagram doesn't allow pre-written messages, so the site copies the order and opens a chat with @makerwoodlb. The customer pastes it and sends.
+
+You reply to confirm, and they pay by cash on delivery or transfer.
 
 The cart is saved in the customer's browser, so it is still there if they come back later.
 
@@ -29,7 +34,8 @@ Open **`assets/js/config.js`** and fill in:
 
 - [ ] `whatsappNumber`: your WhatsApp number, digits only with country code, for example `96171123456`. Until this is set, WhatsApp checkout stays hidden.
 - [ ] `email`: the address that receives orders (replace `hello@makerwood.example`).
-- [ ] `instagram` and `instagramHandle`, `phoneDisplay`, `location`, `hours`.
+- [x] `instagram` and `instagramHandle` are set to [@makerwoodlb](https://www.instagram.com/makerwoodlb/). Customers can already send orders there: the site copies the order and opens a chat with you.
+- [ ] `phoneDisplay`, `location`, `hours`.
 - [ ] `deliveryFee`, `freeDeliveryFrom`, `deliveryArea`, `allowPickup`, `paymentMethods`.
 - [ ] `announcement` (the bar at the top of every page) and `seasonal` (the highlight on the home page). Change these with the seasons.
 
