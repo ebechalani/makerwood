@@ -369,10 +369,10 @@ p { margin: 0; }
 .section-head p { margin-top: 12px; color: var(--muted); max-width: 52ch; }
 
 /* ---------- Category tiles ---------- */
-.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(12px, 2vw, 20px); }
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 2vw, 20px); }
 .cat-tile {
   position: relative; display: block; border-radius: var(--radius-lg); overflow: hidden; text-decoration: none;
-  aspect-ratio: 4 / 4.6; max-width: 100%; isolation: isolate; background: var(--sand);
+  aspect-ratio: 4 / 3.3; max-width: 100%; isolation: isolate; background: var(--sand);
 }
 .cat-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .cat-tile::after {
@@ -394,10 +394,15 @@ p { margin: 0; }
 .cat-tile .arrow svg { width: 18px; height: 18px; }
 .cat-tile:hover img { transform: scale(1.05); }
 .cat-tile:hover .arrow { transform: rotate(-45deg); }
-@media (max-width: 1000px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } .cat-tile { aspect-ratio: 4 / 3.4; } }
+@media (max-width: 1000px) {
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .cat-tile { aspect-ratio: 4 / 3.4; }
+  /* an odd category out spans the full row instead of sitting alone */
+  .cat-tile:last-child:nth-child(odd) { grid-column: 1 / -1; aspect-ratio: 16 / 7; }
+}
 @media (max-width: 520px) {
   .cat-grid { grid-template-columns: 1fr; }
-  .cat-tile { aspect-ratio: 16 / 10; }
+  .cat-tile, .cat-tile:last-child:nth-child(odd) { aspect-ratio: 16 / 10; }
 }
 
 /* ---------- Product cards ---------- */

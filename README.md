@@ -15,7 +15,7 @@ It is a fast static website (plain HTML, CSS and JavaScript, no build step), so 
 | Custom orders | `custom.html` | Request form for signs, logos, events, corporate and school orders |
 | About | `about.html` | Story, machines and materials, FAQ (`#faq`) and contact (`#contact`) |
 
-Categories: **STEAM Kits, Games & Puzzles, Decoration, Christmas, Easter, Mother's Day, Music, Valentine's**, with 4 products each (32 in total).
+Categories: **STEAM Kits, Games & Puzzles, Decoration, Christmas, Christmas Gnomes, Easter, Mother's Day, Music, Valentine's**: 38 products in total (4 per category, 6 gnomes).
 
 ### How orders work
 
