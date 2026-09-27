@@ -52,6 +52,15 @@ window.MW_CATEGORIES = [
     note: 'Order by 10 December',
   },
   {
+    id: 'christmas-gnomes',
+    name: 'Christmas Gnomes',
+    short: 'Standing gnomes with names, for shelves, tables and doors',
+    description:
+      'Laser-cut gnomes with painted hats and chunky beards, standing on a base engraved with a name. Choose one for each child, a whole family on one base, place-card gnomes for the Christmas table or a big one for the front door.',
+    image: 'assets/img/products/gnome-family.webp',
+    note: 'Order by 10 December',
+  },
+  {
     id: 'easter',
     name: 'Easter',
     short: 'Tags, egg holders and wreaths',
@@ -560,6 +569,163 @@ window.MW_PRODUCTS = [
     leadTime: '2 to 3 working days',
   },
 
+  /* ---------------- CHRISTMAS GNOMES ---------------- */
+  {
+    id: 'name-gnome',
+    name: 'Standing Name Gnome',
+    category: 'christmas-gnomes',
+    price: 14,
+    badge: 'New',
+    featured: true,
+    images: mwImages('name-gnome'),
+    summary: 'A standing gnome with a painted hat and beard, on a base engraved with a name.',
+    description: [
+      'Layered pieces give the hat, beard and nose real depth. The name is engraved on the walnut base, so every child in the family can have their own.',
+      'Order several: each gnome in your cart can carry a different name.',
+    ],
+    specs: {
+      Material: '4 mm plywood, hand-painted hat, beard and body',
+      Size: '20 cm tall',
+      Finish: 'Stands on its own, no assembly',
+    },
+    options: [
+      {
+        name: 'Hat colour',
+        choices: [
+          { label: 'Red', price: 0 },
+          { label: 'Green', price: 0 },
+          { label: 'Cream', price: 0 },
+        ],
+      },
+      {
+        name: 'Size',
+        choices: [
+          { label: '20 cm', price: 0 },
+          { label: '30 cm', price: 6 },
+        ],
+      },
+    ],
+    personalization: { label: 'Name on the base', placeholder: 'e.g. Lea', maxLength: 12, required: true },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'gnome-family',
+    name: 'Gnome Family on One Base',
+    category: 'christmas-gnomes',
+    price: 32,
+    featured: false,
+    images: mwImages('gnome-family'),
+    summary: 'Three gnomes of different heights standing together, with your family name.',
+    description: [
+      'A red, a green and a cream gnome side by side on a long walnut base. Ask for more gnomes if your family is bigger and we will make the base to fit.',
+    ],
+    specs: {
+      Material: '4 mm plywood, hand-painted, walnut-stained base',
+      Size: '38 cm wide, 20 cm tall',
+      'In the set': '3 gnomes fixed on one base',
+    },
+    options: [
+      {
+        name: 'Gnomes',
+        choices: [
+          { label: '3 gnomes', price: 0 },
+          { label: '4 gnomes', price: 8 },
+          { label: '5 gnomes', price: 16 },
+        ],
+      },
+    ],
+    personalization: { label: 'Family name on the base', placeholder: 'e.g. The Haddad Family', maxLength: 24, required: true },
+    leadTime: '4 to 6 working days',
+  },
+  {
+    id: 'gnome-ornament',
+    name: 'Gnome Tree Ornament',
+    category: 'christmas-gnomes',
+    price: 8,
+    featured: false,
+    images: mwImages('gnome-ornament'),
+    summary: 'A flat hanging gnome with a gold star, a name and the year on the hat.',
+    description: [
+      'Hangs from the tip of the hat on red ribbon. The name and year are engraved through the red paint, so they show in light wood.',
+    ],
+    specs: {
+      Material: '3 mm plywood, hand-painted',
+      Size: '12 cm tall',
+      Finish: 'Red satin ribbon',
+    },
+    options: [],
+    personalization: { label: 'Name and year', placeholder: 'e.g. Adam 2026', maxLength: 14, required: true },
+    leadTime: '2 to 4 working days',
+  },
+  {
+    id: 'gnome-tree-scene',
+    name: 'Gnome and Tree Scene',
+    category: 'christmas-gnomes',
+    price: 24,
+    featured: false,
+    images: mwImages('gnome-tree-scene'),
+    summary: 'A gnome next to a decorated tree on a Merry Christmas base.',
+    description: [
+      'A small scene for a shelf, a desk or the entrance table. Change the line on the base to a family name if you prefer.',
+    ],
+    specs: {
+      Material: '4 mm plywood, hand-painted, walnut-stained base',
+      Size: '30 cm wide, 25 cm tall',
+    },
+    options: [],
+    personalization: { label: 'Line on the base (optional)', placeholder: 'e.g. Merry Christmas', maxLength: 22 },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'gnome-place-card',
+    name: 'Gnome Place Card Holder',
+    category: 'christmas-gnomes',
+    price: 5,
+    featured: false,
+    images: mwImages('gnome-place-card'),
+    summary: 'A little gnome with a slot for a name card, one for every seat at the Christmas table.',
+    description: [
+      'Guests take them home afterwards. Tell us the names and we print the cards, or leave them blank and write them yourself.',
+    ],
+    specs: {
+      Material: '4 mm plywood, hand-painted, walnut-stained base',
+      Size: '11 cm tall',
+      'In the box': 'Gnome holder and a name card',
+    },
+    options: [
+      {
+        name: 'Cards',
+        choices: [
+          { label: 'Printed with names', price: 0 },
+          { label: 'Blank cards', price: 0 },
+        ],
+      },
+    ],
+    personalization: { label: 'Guest name for this card (optional)', placeholder: 'e.g. Karim', maxLength: 14 },
+    leadTime: '3 to 5 working days',
+  },
+  {
+    id: 'porch-gnome',
+    name: 'Giant Welcome Gnome',
+    category: 'christmas-gnomes',
+    price: 48,
+    badge: 'Limited',
+    featured: false,
+    images: mwImages('porch-gnome'),
+    summary: 'A 60 cm gnome holding a Welcome sign with your family name, for the front door.',
+    description: [
+      'Cut from thicker plywood so it stands firmly by the door or at the bottom of the stairs. Sealed for covered outdoor spaces.',
+    ],
+    specs: {
+      Material: '9 mm plywood, hand-painted, sealed',
+      Size: '60 cm tall',
+      Finish: 'Stands on its own',
+    },
+    options: [],
+    personalization: { label: 'Family name on the sign', placeholder: 'e.g. The Khoury Family', maxLength: 22, required: true },
+    leadTime: '5 to 7 working days',
+  },
+
   /* ---------------- EASTER ---------------- */
   {
     id: 'egg-name-tag',
@@ -886,7 +1052,7 @@ window.MW_PRODUCTS = [
     category: 'valentine',
     price: 25,
     badge: 'Bestseller',
-    featured: true,
+    featured: false,
     images: mwImages('interlocking-hearts'),
     summary: 'Two overlapping hearts, one name on each, standing on a walnut base.',
     description: [
